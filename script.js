@@ -1,4 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const sidebar = document.querySelector('#explorer-view');
+
+    hamburgerMenu.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+    });
+
+    // Close sidebar when a file is clicked on mobile
+    document.querySelector('.file-explorer').addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && e.target.closest('.file')) {
+            sidebar.classList.remove('open');
+        }
+    });
+
     const fileExplorerItems = document.querySelectorAll('.file-explorer .file');
     const folderItems = document.querySelectorAll('.file-explorer .folder');
     const activityBarIcons = document.querySelectorAll('.activity-bar .action-icon');
@@ -230,4 +244,65 @@ me.show_skills()
 
     // Open README.md by default
     openFile('readme.md');
+
+    // --- Terminal Logic ---
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalBody = document.getElementById('terminal-body');
+
+    terminalInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            const command = terminalInput.value;
+            const prompt = terminalBody.querySelector('.terminal-prompt');
+            const newLine = document.createElement('div');
+            newLine.className = 'terminal-line';
+            newLine.innerHTML = `<span>user@portfolio:~$</span> ${command}`;
+            terminalBody.insertBefore(newLine, prompt);
+
+            executeCommand(command);
+
+            terminalInput.value = '';
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+    });
+
+    function executeCommand(command) {
+        let output = '';
+        const commands = {
+            'help': `Available commands:
+    - whoami    : About me
+    - skills    : List my technical skills
+    - contact   : Show my contact information
+    - clear     : Clear the terminal screen`,
+            'whoami': 'Sajjad - A passionate developer who loves solving complex problems and building cool things.',
+            'skills': `
+Languages:  Python, JavaScript, HTML, CSS
+Frameworks: Flask, Django, React, Vue.js
+Tools:      Git, Docker, VS Code, Linux`,
+            'contact': `You can reach me at:
+    Email: your_email@gmail.com
+    LinkedIn: linkedin.com/in/your-profile`,
+            'clear': ''
+        };
+
+        if (command.toLowerCase() in commands) {
+            output = commands[command.toLowerCase()];
+            if (command.toLowerCase() === 'clear') {
+                terminalBody.innerHTML = ''; // Clear everything
+                const prompt = document.createElement('div');
+                prompt.className = 'terminal-prompt';
+                prompt.innerHTML = `<span>user@portfolio:~$</span><input type="text" id="terminal-input" autofocus>`;
+                terminalBody.appendChild(prompt);
+                // Re-add event listener to the new input
+                document.getElementById('terminal-input').addEventListener('keydown', arguments.callee.caller);
+                return;
+            }
+        } else {
+            output = `bash: command not found: ${command}`;
+        }
+
+        const outputLine = document.createElement('div');
+        outputLine.className = 'terminal-line';
+        outputLine.textContent = output;
+        terminalBody.insertBefore(outputLine, terminalBody.querySelector('.terminal-prompt'));
+    }
 });

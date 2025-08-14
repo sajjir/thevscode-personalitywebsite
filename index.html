@@ -9,6 +9,9 @@
 <body>
     <div class="vscode-container">
         <div class="activity-bar">
+        <div class="hamburger-menu" id="hamburger-menu">
+            <i class="fas fa-bars"></i>
+        </div>
             <div class="action-icon active" data-view="explorer"><i class="fas fa-files"></i></div>
             <div class="action-icon" data-view="search"><i class="fas fa-search"></i></div>
             <div class="action-icon" data-view="git"><i class="fas fa-code-branch"></i></div>
@@ -45,6 +48,18 @@
                 </div>
             <div class="editor-container">
                 </div>
+        </div>
+
+        <div class="terminal" id="terminal">
+            <div class="terminal-header">TERMINAL</div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="terminal-line">Welcome to Sajjad's Portfolio!</div>
+                <div class="terminal-line">Type 'help' to see available commands.</div>
+                <div class="terminal-prompt">
+                    <span>user@portfolio:~$</span>
+                    <input type="text" id="terminal-input" autofocus>
+                </div>
+            </div>
         </div>
 
         <div class="status-bar">
