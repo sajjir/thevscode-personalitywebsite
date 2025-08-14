@@ -185,3 +185,16 @@ text-align: right;
 .status-right span {
     margin: 0 8px;
 }
+
+/* --- FIX for FontAwesome Icons --- */
+/* For regular/solid icons */
+.fas {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+}
+
+/* For brand icons */
+.fab {
+    font-family: "Font Awesome 6 Brands", sans-serif;
+    font-weight: 400;
+}
