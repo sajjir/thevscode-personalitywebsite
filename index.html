@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sajjad's Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="vscode-container">
+        <div class="activity-bar">
+            <div class="action-icon active" data-view="explorer"><i class="fas fa-files"></i></div>
+            <div class="action-icon" data-view="search"><i class="fas fa-search"></i></div>
+            <div class="action-icon" data-view="git"><i class="fas fa-code-branch"></i></div>
+            <div class="action-icon" data-view="extensions"><i class="fas fa-puzzle-piece"></i></div>
+        </div>
+
+        <div class="sidebar" id="explorer-view">
+            <div class="sidebar-header">اکسپلورر</div>
+            <div class="file-explorer">
+                <ul>
+                    <li class="folder" data-state="closed"><i class="fas fa-folder"></i> <span>معرفی</span>
+                        <ul>
+                            <li class="file" data-file="aboutme.md"><i class="fab fa-markdown"></i> about_me.md</li>
+                            <li class="file" data-file="skills.py"><i class="fab fa-python"></i> skills.py</li>
+                        </ul>
+                    </li>
+                     <li class="folder" data-state="closed"><i class="fas fa-folder"></i> <span>پروژه‌ها</span>
+                        <ul>
+                            <li class="file" data-file="cool-project.json"><i class="fas fa-file-code"></i> cool-project.json</li>
+                        </ul>
+                    </li>
+                    <li class="file" data-file="readme.md"><i class="fab fa-markdown"></i> README.md</li>
+                    <li class="file" data-file="contact.html"><i class="fas fa-envelope"></i> contact.html</li>
+                </ul>
+            </div>
+        </div>
+         <div class="sidebar" id="search-view" style="display: none;">
+            <div class="sidebar-header">جستجو</div>
+            <div style="padding: 10px; color: #888;">قابلیت جستجو در دست ساخت است...</div>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs-container">
+                </div>
+            <div class="editor-container">
+                </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-left">
+                <i class="fas fa-code-branch"></i> main
+            </div>
+            <div class="status-right">
+                <span>UTF-8</span>
+                <span>LF</span>
+                <span><i class="fab fa-python"></i> Python 3.11</span>
+                <span><i class="fas fa-bell"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

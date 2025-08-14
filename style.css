@@ -1,0 +1,187 @@
+:root {
+    --bg-color: #1e1e1e;
+    --sidebar-bg: #252526;
+    --activity-bar-bg: #333333;
+    --editor-bg: #1e1e1e;
+    --status-bar-bg: #007acc;
+    --text-color: #d4d4d4;
+    --inactive-text: #888888;
+    --border-color: #3c3c3c;
+    --active-tab-bg: #1e1e1e;
+    --inactive-tab-bg: #2d2d2d;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+.vscode-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Activity Bar */
+.activity-bar {
+    width: 50px;
+    background-color: var(--activity-bar-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    border-right: 1px solid var(--border-color);
+}
+.action-icon {
+    font-size: 24px;
+    padding: 12px;
+    cursor: pointer;
+    color: var(--inactive-text);
+}
+.action-icon.active {
+    color: var(--text-color);
+    border-left: 2px solid var(--text-color);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-header {
+    padding: 10px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--inactive-text);
+    border-bottom: 1px solid var(--border-color);
+}
+.file-explorer ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+.file-explorer ul ul {
+    padding-right: 20px;
+    display: none; /* Folders are closed by default */
+}
+.file-explorer li {
+    padding: 5px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.file-explorer li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.file-explorer li i {
+    margin-left: 8px;
+    width: 16px;
+    text-align: center;
+}
+.folder > i.fa-folder::before { content: "\f07b"; } /* Closed folder */
+.folder[data-state="open"] > i.fa-folder::before { content: "\f07c"; } /* Open folder */
+.folder[data-state="open"] > ul { display: block; }
+
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.tabs-container {
+    display: flex;
+    background-color: #252526;
+}
+.tab {
+    padding: 10px 15px;
+    background-color: var(--inactive-tab-bg);
+    border-right: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.tab.active {
+    background-color: var(--active-tab-bg);
+    color: var(--text-color);
+}
+.tab .close-tab {
+    margin-right: 10px;
+    font-size: 12px;
+    color: var(--inactive-text);
+    padding: 2px;
+}
+.tab .close-tab:hover {
+    color: var(--text-color);
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 3px;
+}
+.editor-container {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: var(--editor-bg);
+    direction: rtl;
+text-align: right;
+}
+.editor-content {
+    display: none;
+    white-space: pre-wrap; /* To respect newlines and spaces */
+    line-height: 1.6;
+    font-family: 'Fira Code', 'Consolas', monospace;
+}
+.editor-content.active {
+    display: block;
+}
+
+/* Contact Form Styles */
+.contact-form {
+    max-width: 600px;
+}
+.contact-form h2 { color: #569cd6; }
+.contact-form label { display: block; margin: 15px 0 5px; }
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    background-color: #3c3c3c;
+    border: 1px solid #555;
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 3px;
+}
+.contact-form button {
+    background-color: var(--status-bar-bg);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 3px;
+}
+#form-response { margin-top: 20px; }
+
+/* Status Bar */
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--status-bar-bg);
+    color: white;
+    padding: 3px 15px;
+    font-size: 14px;
+}
+.status-bar i {
+    margin: 0 5px;
+}
+.status-left, .status-right {
+    display: flex;
+    align-items: center;
+}
+.status-right span {
+    margin: 0 8px;
+}
