@@ -18,26 +18,26 @@
             <div class="action-icon" data-view="extensions"><i class="fas fa-puzzle-piece"></i></div>
         </div>
 
-        <div class="sidebar" id="explorer-view">
-            <div class="sidebar-header">اکسپلورر</div>
-            <div class="file-explorer">
+<div class="sidebar" id="explorer-view">
+    <div class="sidebar-header">EXPLORER</div>
+    <div class="file-explorer">
+        <ul>
+            <li class="folder" data-state="closed"><i class="fas fa-folder"></i> <span>bio</span>
                 <ul>
-                    <li class="folder" data-state="closed"><i class="fas fa-folder"></i> <span>معرفی</span>
-                        <ul>
-                            <li class="file" data-file="aboutme.md"><i class="fab fa-markdown"></i> about_me.md</li>
-                            <li class="file" data-file="skills.py"><i class="fab fa-python"></i> skills.py</li>
-                        </ul>
-                    </li>
-                     <li class="folder" data-state="closed"><i class="fas fa-folder"></i> <span>پروژه‌ها</span>
-                        <ul>
-                            <li class="file" data-file="cool-project.json"><i class="fas fa-file-code"></i> cool-project.json</li>
-                        </ul>
-                    </li>
-                    <li class="file" data-file="readme.md"><i class="fab fa-markdown"></i> README.md</li>
-                    <li class="file" data-file="contact.html"><i class="fas fa-envelope"></i> contact.html</li>
+                    <li class="file" data-file="aboutme.md"><i class="fab fa-markdown"></i> about_me.md</li>
+                    <li class="file" data-file="skills.py"><i class="fab fa-python"></i> skills.py</li>
                 </ul>
-            </div>
-        </div>
+            </li>
+             <li class="folder" data-state="closed"><i class="fas fa-folder"></i> <span>projects</span>
+                <ul>
+                    <li class="file" data-file="cool-project.json"><i class="fas fa-file-code"></i> cool-project.json</li>
+                </ul>
+            </li>
+            <li class="file" data-file="readme.md"><i class="fab fa-markdown"></i> README.md</li>
+            <li class="file" data-file="contact.html"><i class="fas fa-envelope"></i> contact.html</li>
+        </ul>
+    </div>
+</div>
          <div class="sidebar" id="search-view" style="display: none;">
             <div class="sidebar-header">جستجو</div>
             <div style="padding: 10px; color: #888;">قابلیت جستجو در دست ساخت است...</div>
@@ -48,16 +48,23 @@
                 </div>
             <div class="editor-container">
                 </div>
-        </div>
-
-        <div class="terminal" id="terminal">
-            <div class="terminal-header">TERMINAL</div>
-            <div class="terminal-body" id="terminal-body">
-                <div class="terminal-line">Welcome to Sajjad's Portfolio!</div>
-                <div class="terminal-line">Type 'help' to see available commands.</div>
-                <div class="terminal-prompt">
-                    <span>user@portfolio:~$</span>
-                    <input type="text" id="terminal-input" autofocus>
+            <div class="panel" id="panel">
+                <div class="panel-resizer" id="panel-resizer"></div>
+                <div class="panel-header">
+                    <div class="panel-tabs">
+                        <div class="panel-tab active">TERMINAL</div>
+                    </div>
+                    <div class="panel-actions">
+                        <i class="fas fa-times" id="close-panel-btn"></i>
+                    </div>
+                </div>
+                <div class="panel-body" id="terminal-body">
+                    <div class="terminal-line">Welcome to Sajjad's Portfolio!</div>
+                    <div class="terminal-line">Type 'help' to see available commands.</div>
+                    <div class="terminal-prompt">
+                        <span>user@portfolio:~$</span>
+                        <input type="text" id="terminal-input" autofocus>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,7 +77,7 @@
                 <span>UTF-8</span>
                 <span>LF</span>
                 <span><i class="fab fa-python"></i> Python 3.11</span>
-                <span><i class="fas fa-bell"></i></span>
+                <span id="toggle-panel-btn" style="cursor: pointer;"><i class="fas fa-terminal"></i></span> <span><i class="fas fa-bell"></i></span>
             </div>
         </div>
     </div>

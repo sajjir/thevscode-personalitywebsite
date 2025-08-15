@@ -21,40 +21,40 @@ document.addEventListener('DOMContentLoaded', function () {
     const editorContainer = document.querySelector('.editor-container');
     let openFiles = {}; // Tracks open files and their content
 
-    // --- Content for each file ---
-    const fileContents = {
-        'readme.md': `
-# 👋 سلام، من سجاد هستم!
+// --- Content for each file ---
+const fileContents = {
+    'readme.md': `
+# Hi, I'm Sajjad 👋
 
-به پورتفولیوی تعاملی من خوش اومدی. این سایت یک شبیه‌سازی از محیط کدنویسی مورد علاقه‌ام، **VS Code** است.
+Welcome to my interactive portfolio. This website is a simulation of my favorite code editor, **VS Code**.
 
-### 🚀 درباره من
-- برنامه‌نویس و عاشق حل مسائل پیچیده.
-- همیشه در حال یادگیری تکنولوژی‌های جدید.
-- برای دیدن مهارت‌هام، فایل \`skills.py\` رو باز کن!
+### 🚀 About Me
+- A software developer passionate about solving complex problems.
+- Always learning and exploring new technologies.
+- To see my skills, open the \`skills.py\` file!
 
-### 🎮 سرگرمی‌ها
-- بازی‌های ویدیویی استراتژیک
-- مطالعه کتاب‌های علمی-تخیلی
-- گشت و گذار در گیت‌هاب و پیدا کردن پروژه‌های جالب
+### 🎮 Hobbies
+- Playing strategy video games.
+- Reading sci-fi books.
+- Exploring cool projects on GitHub.
 `,
-        'aboutme.md': `
-## بیوگرافی کامل‌تر
+    'aboutme.md': `
+## More About Me
 
-من یک توسعه‌دهنده نرم‌افزار با تجربه در ... هستم. علاقه اصلی من ساخت ابزارهای کارآمد و خلاقانه است که زندگی رو برای مردم ساده‌تر کنه. 
-این پروژه یکی از نمونه‌کارهای من برای نمایش ترکیبی از مهارت‌های فرانت‌اند و بک‌اند هست.
+I am a software developer with experience in building efficient and creative tools that make life easier for people.
+This project is one of my showcases to demonstrate a combination of my front-end and back-end skills.
 `,
-        'skills.py': `
+    'skills.py': `
 class SajjadSkills:
     def __init__(self):
         self.languages = ["Python", "JavaScript", "HTML", "CSS"]
         self.frameworks = {
             "backend": ["Flask", "Django", "FastAPI"],
-            "frontend": ["React", "Vue.js"] # Just examples
+            "frontend": ["React", "Vue.js"] # Just for demonstration
         }
         self.tools = ["Git", "Docker", "VS Code", "Linux"]
 
-    def show_skills(self):
+    def display_skills(self):
         print("--- My Technical Skills ---")
         for skill_type, skills in self.__dict__.items():
             print(f"\\n# {skill_type.capitalize()}")
@@ -68,37 +68,37 @@ class SajjadSkills:
                         print(f"  - {item}")
 
 me = SajjadSkills()
-me.show_skills()
+me.display_skills()
 `,
-        'cool-project.json': `
+    'cool-project.json': `
 {
   "projectName": "VS Code Portfolio",
-  "description": "یک وبسایت شخصی خلاقانه که با الهام از محیط VS Code طراحی شده تا مهارت‌ها و پروژه‌ها رو به شکلی جذاب نمایش بده.",
+  "description": "A creative personal website inspired by the VS Code environment to showcase skills and projects in an engaging way.",
   "technologies": ["HTML", "CSS", "JavaScript", "Python", "Flask"],
   "status": "In Development",
   "github_link": "https://github.com/your-username/your-repo"
 }
 `,
-        'contact.html': `
+    'contact.html': `
 <div class="contact-form">
-    <h2><i class="fas fa-paper-plane"></i> تماس با من</h2>
-    <p>برای همکاری، سوال یا فقط یک سلام، فرم زیر رو پر کن!</p>
+    <h2><i class="fas fa-paper-plane"></i> Get in Touch</h2>
+    <p>Feel free to reach out for collaboration, questions, or just to say hi!</p>
     <form id="contactForm">
-        <label for="name">نام شما:</label>
+        <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required>
         
-        <label for="email">ایمیل شما:</label>
+        <label for="email">Your Email:</label>
         <input type="email" id="email" name="email" required>
         
-        <label for="message">پیام شما:</label>
+        <label for="message">Your Message:</label>
         <textarea id="message" name="message" rows="6" required></textarea>
         
-        <button type="submit">ارسال پیام</button>
+        <button type="submit">Send Message</button>
     </form>
     <div id="form-response"></div>
 </div>
 `
-    };
+};
 
     // --- Event Listeners ---
 
@@ -245,64 +245,110 @@ me.show_skills()
     // Open README.md by default
     openFile('readme.md');
 
-    // --- Terminal Logic ---
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalBody = document.getElementById('terminal-body');
+// --- Panel (Terminal) Logic ---
+const panel = document.getElementById('panel');
+let terminalInput = document.getElementById('terminal-input'); // Use let to re-assign
+const terminalBody = document.getElementById('terminal-body');
+const closePanelBtn = document.getElementById('close-panel-btn');
+const togglePanelBtn = document.getElementById('toggle-panel-btn');
+const panelResizer = document.getElementById('panel-resizer');
+const editorContainer = document.querySelector('.editor-container');
 
-    terminalInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-            const command = terminalInput.value;
-            const prompt = terminalBody.querySelector('.terminal-prompt');
-            const newLine = document.createElement('div');
-            newLine.className = 'terminal-line';
-            newLine.innerHTML = `<span>user@portfolio:~$</span> ${command}`;
-            terminalBody.insertBefore(newLine, prompt);
+function togglePanel() {
+    panel.classList.toggle('visible');
+    if(panel.classList.contains('visible')){
+        editorContainer.style.height = `calc(100% - ${panel.style.height || '200px'})`;
+    } else {
+        editorContainer.style.height = '100%';
+    }
+}
 
-            executeCommand(command);
+closePanelBtn.addEventListener('click', togglePanel);
+togglePanelBtn.addEventListener('click', togglePanel);
 
-            terminalInput.value = '';
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        }
-    });
+// Draggable Resizer Logic
+let isResizing = false;
+panelResizer.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    document.body.style.cursor = 'ns-resize'; // Change cursor for the whole page
+});
 
-    function executeCommand(command) {
-        let output = '';
-        const commands = {
-            'help': `Available commands:
-    - whoami    : About me
-    - skills    : List my technical skills
-    - contact   : Show my contact information
-    - clear     : Clear the terminal screen`,
-            'whoami': 'Sajjad - A passionate developer who loves solving complex problems and building cool things.',
-            'skills': `
+document.addEventListener('mousemove', (e) => {
+    if (!isResizing) return;
+    const newHeight = window.innerHeight - e.clientY - document.querySelector('.status-bar').offsetHeight;
+    if (newHeight > 50 && newHeight < (window.innerHeight - 200)) { // Set min/max resize height
+        panel.style.height = `${newHeight}px`;
+        editorContainer.style.height = `calc(100% - ${newHeight}px)`;
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    isResizing = false;
+    document.body.style.cursor = 'default'; // Reset cursor
+});
+
+
+// Command execution logic
+function handleTerminalInput(e) {
+    if (e.key === 'Enter') {
+        const command = terminalInput.value;
+        const prompt = terminalBody.querySelector('.terminal-prompt');
+        const newLine = document.createElement('div');
+        newLine.className = 'terminal-line';
+        newLine.innerHTML = `<span>user@portfolio:~$</span> ${command}`;
+        terminalBody.insertBefore(newLine, prompt);
+
+        executeCommand(command);
+
+        terminalInput.value = '';
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+}
+
+terminalInput.addEventListener('keydown', handleTerminalInput);
+
+function executeCommand(command) {
+    let output = '';
+    const commands = {
+        'help': `Available commands:
+- whoami    : About me
+- skills    : List my technical skills
+- contact   : Show my contact information
+- clear     : Clear the terminal screen`,
+        'whoami': 'Sajjad - A passionate developer who loves solving complex problems and building cool things.',
+        'skills': `
 Languages:  Python, JavaScript, HTML, CSS
 Frameworks: Flask, Django, React, Vue.js
 Tools:      Git, Docker, VS Code, Linux`,
-            'contact': `You can reach me at:
-    Email: your_email@gmail.com
-    LinkedIn: linkedin.com/in/your-profile`,
-            'clear': ''
-        };
+        'contact': `You can reach me at:
+Email: your_email@gmail.com
+LinkedIn: linkedin.com/in/your-profile`,
+        'clear': ''
+    };
 
-        if (command.toLowerCase() in commands) {
-            output = commands[command.toLowerCase()];
-            if (command.toLowerCase() === 'clear') {
-                terminalBody.innerHTML = ''; // Clear everything
-                const prompt = document.createElement('div');
-                prompt.className = 'terminal-prompt';
-                prompt.innerHTML = `<span>user@portfolio:~$</span><input type="text" id="terminal-input" autofocus>`;
-                terminalBody.appendChild(prompt);
-                // Re-add event listener to the new input
-                document.getElementById('terminal-input').addEventListener('keydown', arguments.callee.caller);
-                return;
-            }
-        } else {
-            output = `bash: command not found: ${command}`;
+    if (command.toLowerCase() in commands) {
+        output = commands[command.toLowerCase()];
+        if (command.toLowerCase() === 'clear') {
+            // Re-create the terminal body to clear it
+            terminalBody.innerHTML = `
+                <div class="terminal-prompt">
+                    <span>user@portfolio:~$</span>
+                    <input type="text" id="terminal-input" autofocus>
+                </div>
+            `;
+            // Re-assign the input and add the listener again
+            terminalInput = document.getElementById('terminal-input');
+            terminalInput.addEventListener('keydown', handleTerminalInput);
+            terminalInput.focus();
+            return;
         }
-
-        const outputLine = document.createElement('div');
-        outputLine.className = 'terminal-line';
-        outputLine.textContent = output;
-        terminalBody.insertBefore(outputLine, terminalBody.querySelector('.terminal-prompt'));
+    } else {
+        output = `bash: command not found: ${command}`;
     }
+
+    const outputLine = document.createElement('div');
+    outputLine.className = 'terminal-line';
+    outputLine.textContent = output;
+    terminalBody.insertBefore(outputLine, terminalBody.querySelector('.terminal-prompt'));
+}
 });
