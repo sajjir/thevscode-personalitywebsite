@@ -118,8 +118,11 @@ me.display_skills()
 
     // 2. Folder clicks
     folderItems.forEach(folder => {
+        console.log("Attaching listener to folder:", folder); // Log 1
         folder.addEventListener('click', (e) => {
+            console.log("Folder clicked!", e.target); // Log 2
             if (e.target.tagName === 'SPAN' || e.target.tagName === 'I') {
+                console.log("Toggling folder state."); // Log 3
                 const currentState = folder.dataset.state;
                 folder.dataset.state = currentState === 'closed' ? 'open' : 'closed';
             }
@@ -245,110 +248,4 @@ me.display_skills()
     // Open README.md by default
     openFile('readme.md');
 
-// --- Panel (Terminal) Logic ---
-const panel = document.getElementById('panel');
-let terminalInput = document.getElementById('terminal-input'); // Use let to re-assign
-const terminalBody = document.getElementById('terminal-body');
-const closePanelBtn = document.getElementById('close-panel-btn');
-const togglePanelBtn = document.getElementById('toggle-panel-btn');
-const panelResizer = document.getElementById('panel-resizer');
-const editorContainer = document.querySelector('.editor-container');
-
-function togglePanel() {
-    panel.classList.toggle('visible');
-    if(panel.classList.contains('visible')){
-        editorContainer.style.height = `calc(100% - ${panel.style.height || '200px'})`;
-    } else {
-        editorContainer.style.height = '100%';
-    }
-}
-
-closePanelBtn.addEventListener('click', togglePanel);
-togglePanelBtn.addEventListener('click', togglePanel);
-
-// Draggable Resizer Logic
-let isResizing = false;
-panelResizer.addEventListener('mousedown', (e) => {
-    isResizing = true;
-    document.body.style.cursor = 'ns-resize'; // Change cursor for the whole page
-});
-
-document.addEventListener('mousemove', (e) => {
-    if (!isResizing) return;
-    const newHeight = window.innerHeight - e.clientY - document.querySelector('.status-bar').offsetHeight;
-    if (newHeight > 50 && newHeight < (window.innerHeight - 200)) { // Set min/max resize height
-        panel.style.height = `${newHeight}px`;
-        editorContainer.style.height = `calc(100% - ${newHeight}px)`;
-    }
-});
-
-document.addEventListener('mouseup', () => {
-    isResizing = false;
-    document.body.style.cursor = 'default'; // Reset cursor
-});
-
-
-// Command execution logic
-function handleTerminalInput(e) {
-    if (e.key === 'Enter') {
-        const command = terminalInput.value;
-        const prompt = terminalBody.querySelector('.terminal-prompt');
-        const newLine = document.createElement('div');
-        newLine.className = 'terminal-line';
-        newLine.innerHTML = `<span>user@portfolio:~$</span> ${command}`;
-        terminalBody.insertBefore(newLine, prompt);
-
-        executeCommand(command);
-
-        terminalInput.value = '';
-        terminalBody.scrollTop = terminalBody.scrollHeight;
-    }
-}
-
-terminalInput.addEventListener('keydown', handleTerminalInput);
-
-function executeCommand(command) {
-    let output = '';
-    const commands = {
-        'help': `Available commands:
-- whoami    : About me
-- skills    : List my technical skills
-- contact   : Show my contact information
-- clear     : Clear the terminal screen`,
-        'whoami': 'Sajjad - A passionate developer who loves solving complex problems and building cool things.',
-        'skills': `
-Languages:  Python, JavaScript, HTML, CSS
-Frameworks: Flask, Django, React, Vue.js
-Tools:      Git, Docker, VS Code, Linux`,
-        'contact': `You can reach me at:
-Email: your_email@gmail.com
-LinkedIn: linkedin.com/in/your-profile`,
-        'clear': ''
-    };
-
-    if (command.toLowerCase() in commands) {
-        output = commands[command.toLowerCase()];
-        if (command.toLowerCase() === 'clear') {
-            // Re-create the terminal body to clear it
-            terminalBody.innerHTML = `
-                <div class="terminal-prompt">
-                    <span>user@portfolio:~$</span>
-                    <input type="text" id="terminal-input" autofocus>
-                </div>
-            `;
-            // Re-assign the input and add the listener again
-            terminalInput = document.getElementById('terminal-input');
-            terminalInput.addEventListener('keydown', handleTerminalInput);
-            terminalInput.focus();
-            return;
-        }
-    } else {
-        output = `bash: command not found: ${command}`;
-    }
-
-    const outputLine = document.createElement('div');
-    outputLine.className = 'terminal-line';
-    outputLine.textContent = output;
-    terminalBody.insertBefore(outputLine, terminalBody.querySelector('.terminal-prompt'));
-}
 });
